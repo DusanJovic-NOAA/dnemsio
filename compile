@@ -1,0 +1,25 @@
+#!/bin/bash
+set -eu
+
+echo
+
+if [[ ! -f conf/modules ]]; then
+    echo "File conf/modules not found!"
+    echo "Running ./configure .... "
+    ./configure
+fi
+
+if [[ -f conf/modules ]]; then
+    echo -n "Loading modules .... "
+    source conf/modules
+    echo "done."
+    echo
+fi
+
+echo "Running make" "$@"
+
+make "$@"
+
+echo
+echo "Compilation finished successfully."
+echo

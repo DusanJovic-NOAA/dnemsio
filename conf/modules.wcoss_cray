@@ -1,0 +1,23 @@
+##
+## purge all currently loaded modules.
+## do not rely on user's environment
+##
+module purge
+
+##
+## load programming environment
+## this typically includes compiler, MPI and job scheduler
+##
+module load PrgEnv-intel
+module load intel/15.0.3.187
+module load alps
+module load xt-lsfhpc
+module load craype-sandybridge
+
+##
+## load nwprod libraries
+##
+module load nemsio-intel/2.2.2
+module load bacio-intel/2.0.1
+module load w3emc-intel/2.2.0
+module load w3nco-intel/2.0.6
