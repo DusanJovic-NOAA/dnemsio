@@ -391,30 +391,65 @@ program dnemsio
   fieldsize=(dimx_1+2*nframe_1)*(dimy_1+2*nframe_1)
 
   ! other standard metadata records
+
+  if (nmeta_1 >= 5) then
   allocate(recname(nrec_1))
   allocate(reclevtyp(nrec_1))
   allocate(reclev(nrec_1))
-  allocate(vcoord(dimz_1+1,3,2))
-  allocate(lat(fieldsize))
-  allocate(lon(fieldsize))
-  allocate(dx(fieldsize))
-  allocate(dy(fieldsize))
-  allocate(cpi(ntrac_1+1))
-  allocate(ri(ntrac_1+1))
   call nemsio_getfilehead(gfile1,iret=iret, &
                           recname=recname, &
                           reclevtyp=reclevtyp, &
-                          reclev=reclev, &
-                          vcoord=vcoord, &
-                          lat=lat, &
-                          lon=lon, &
-                          dx=dx, &
-                          dy=dy, &
-                          cpi=cpi, &
-                          ri=ri)
+                          reclev=reclev)
   if (iret /= 0) then
     write(0,*)" nemsio_getfilehead: (recname,...) iret /= 0 ",iret
     stop
+  endif
+  endif
+
+  if (nmeta_1 >= 6) then
+  allocate(vcoord(dimz_1+1,3,2))
+  call nemsio_getfilehead(gfile1,iret=iret, &
+                          vcoord=vcoord)
+  if (iret /= 0) then
+    write(0,*)" nemsio_getfilehead: (vcoord,...) iret /= 0 ",iret
+    stop
+  endif
+  endif
+
+  if (nmeta_1 >= 8) then
+  allocate(lat(fieldsize))
+  allocate(lon(fieldsize))
+  call nemsio_getfilehead(gfile1,iret=iret, &
+                          lat=lat, &
+                          lon=lon)
+  if (iret /= 0) then
+    write(0,*)" nemsio_getfilehead: (lon,lat,...) iret /= 0 ",iret
+    stop
+  endif
+  endif
+
+  if (nmeta_1 >= 10) then
+  allocate(dx(fieldsize))
+  allocate(dy(fieldsize))
+  call nemsio_getfilehead(gfile1,iret=iret, &
+                          dx=dx, &
+                          dy=dy)
+  if (iret /= 0) then
+    write(0,*)" nemsio_getfilehead: (dx,dy,...) iret /= 0 ",iret
+    stop
+  endif
+  endif
+
+  if (nmeta_1 >= 12) then
+  allocate(cpi(ntrac_1+1))
+  allocate(ri(ntrac_1+1))
+  call nemsio_getfilehead(gfile1,iret=iret, &
+                          cpi=cpi, &
+                          ri=ri)
+  if (iret /= 0) then
+    write(0,*)" nemsio_getfilehead: (cpi,ri,...) iret /= 0 ",iret
+    stop
+  endif
   endif
 
   ! user-defined metadata
@@ -597,19 +632,27 @@ program dnemsio
 
    print *, ' meta3-meta12 iret = ', iret
    print *, ' ------------------------- '
+   if (nmeta_1 >= 5) then
    !do n=1,nrec_1
    !print *, ' recname, reclevtyp, reclev ',recname(n), reclevtyp(n), reclev(n)
    !end do
+   endif
+   if (nmeta_1 >= 6) then
    print *,'vcoord(:,1,1)=',vcoord(:,1,1)
    print *,'vcoord(:,2,1)=',vcoord(:,2,1)
    print *,'vcoord(:,3,1)=',vcoord(:,3,1)
    print *,'vcoord(:,1,2)=',vcoord(:,1,2)
    print *,'vcoord(:,2,2)=',vcoord(:,2,2)
    print *,'vcoord(:,3,2)=',vcoord(:,3,2)
+   endif
+   if (nmeta_1 >= 8) then
    print *,'lat=',maxval(lat),minval(lat)
    print *,'lon=',maxval(lon),minval(lon)
+   endif
+   if (nmeta_1 >= 10) then
    print *,'dx=',maxval(dx),minval(dx)
    print *,'dy=',maxval(dy),minval(dy)
+   endif
 
   print *, ' meta3 '
   print *, ' ------------------------- '
