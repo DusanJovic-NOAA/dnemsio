@@ -1,0 +1,20 @@
+##
+## purge all currently loaded modules.
+## do not rely on user's environment
+##
+module purge
+
+##
+## load programming environment
+## this typically includes compiler, MPI and job scheduler
+##
+module load intel/18.0.5.274
+
+##
+## load nwprod libraries
+##
+module use -a /scratch2/NCEPDEV/nwprod/NCEPLIBS/modulefiles
+module load nemsio/2.2.4
+module load bacio/2.0.3
+module load w3nco/2.0.7
+module load w3emc/2.3.1
