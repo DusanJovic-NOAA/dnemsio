@@ -70,5 +70,5 @@ MODULES_FILE=conf/modules.$CONFIGURATION
 [[ -f "$MODULES_FILE" ]] && copy_diff_files "$MODULES_FILE" conf/modules
 
 echo
-echo "The NMMB is now configured on $CONFIGURATION"
+echo "dnemsio is now configured on $CONFIGURATION"
 echo
